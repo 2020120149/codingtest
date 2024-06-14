@@ -1,0 +1,34 @@
+#include <iostream> 
+#include <vector> 
+#include <algorithm>
+using namespace std; 
+
+int main() {
+    long long k, n; 
+    cin >> k >> n; 
+    vector<long long> lan(k); 
+    
+    for (int i = 0; i < k; i++) {
+        cin >> lan[i];
+    }
+    sort(lan.begin(), lan.end());
+    
+    long long left = 1, right = lan[k - 1];
+    long long max_length = 0; 
+    
+    while (left <= right) {
+        long long mid = (left + right) / 2;
+        long long sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += (lan[i] / mid);
+        }
+        if (sum >= n) {
+            max_length = mid;
+            left = mid + 1; 
+        }
+        else {
+            right = mid - 1; 
+        }
+    }
+    cout << max_length << '\n';
+}
