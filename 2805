@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+long long int cut_wood(long long int n, vector<long long int>& wood, long long int cut) {
+    long long int result = 0;
+    for (int i = 0; i < n; i++) {
+        if (wood[i] > cut) result += wood[i] - cut;
+    }
+    return result;
+}
+
+int main() {
+    long long int n;
+    cin >> n;
+    long long int target;
+    cin >> target;
+    vector<long long int> wood(n);
+    long long int max = 0;
+    for (long long int i = 0; i < n; i++) {
+        cin >> wood[i];
+        if (wood[i] > max) max = wood[i];
+    }
+
+    long long int start = 0, end = max, result = 0;
+    while (start <= end) {
+        long long int mid = (start + end) / 2;
+        long long int amount = cut_wood(n, wood, mid);
+
+        if (amount == target) {
+            result = mid;
+            break;
+        } else if (amount > target) {
+            result = mid; 
+            start = mid + 1; 
+        } else {
+            end = mid - 1;  
+        }
+    }
+
+    cout << result << endl;
+
+    return 0;
+}
