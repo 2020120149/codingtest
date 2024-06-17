@@ -1,0 +1,70 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<bool> visited;
+vector<vector<int>> A;
+
+void dfs(int n);
+void bfs(int n);
+
+int main() {
+    int N, M, V;
+    cin >> N >> M >> V;
+
+    A.resize(N + 1);
+    visited = vector<bool>(N + 1, false);
+
+    int s, e;
+
+    for (int i = 0; i < M; i++) {
+        cin >> s >> e;
+        A[s].push_back(e);
+        A[e].push_back(s);
+    }
+
+    for (int i = 1; i <= N; i++) {
+        sort(A[i].begin(), A[i].end()); // 작은 수부터 넣기 위함
+    }
+
+    dfs(V);
+
+    cout << "\n";
+    visited = vector<bool>(N + 1, false);
+    bfs(V);
+
+    return 0;
+}
+
+void dfs(int n) {
+    cout << n << " ";
+    visited[n] = true;
+
+    for (int i : A[n]) {
+        if (!visited[i]) {
+            dfs(i);
+        }
+    }
+}
+
+void bfs(int n) {
+    queue<int> myqueue;
+    myqueue.push(n);
+    visited[n] = true;
+
+    while (!myqueue.empty()) {
+        int now_node = myqueue.front();
+        cout << now_node << " ";
+        myqueue.pop();
+
+        for (int i : A[now_node]) {
+            if (!visited[i]) {
+                myqueue.push(i);
+                visited[i] = true;
+            }
+        }
+    }
+}
