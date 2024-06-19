@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int map[51][51] = {{0, }};
+int t, n, m, k;
+
+int dx[4] = {0, 0, -1, 1};
+int dy[4] = {1, -1, 0, 0};
+int ans = 0;
+void dfs (int x, int y)
+{
+    map[x][y] = 0;
+    for(int i = 0; i < 4; i++)
+    {
+        int new_x = x + dx[i];
+        int new_y = y + dy[i];
+        
+        if(x < 0 || x > m || y < 0 || y > n || map[new_x][new_y] == 0)
+        {
+            continue;
+        }
+        
+        dfs(new_x, new_y);
+    }
+}
+
+
+
+
+int main()
+{
+    cin >> t;
+    for(int j = 0; j < t; j++)
+    {
+        cin >> m >> n >> k;
+
+        memset(map, 0, sizeof(map));
+        int x, y;
+        for(int i = 0; i < k; i++)
+        {
+            cin >> x >> y;
+            map[y][x] = 1;
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if(map[i][j] == 1)
+                {
+                    dfs(i, j);
+                    ans += 1;
+                }  
+            }
+        }
+        
+        cout << ans << "\n";
+
+        ans = 0;
+    }   
+}
