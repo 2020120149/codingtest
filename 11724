@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int map[1001][1001] = {0};
+int dfsChecked[1001][1001] = {0};
+
+int N, M; 
+
+void dfs(int i, int j ){
+    dfsChecked[i][j] =1;
+    for ( int k = 1; k <= N; k++){
+        if(map[j][k] ==1 && dfsChecked[j][k] == 0){
+            dfsChecked[j][k] = 1;
+            dfs(j, k);
+        }
+    }
+}
+
+int main(){
+    int a, b, cnt = 0;
+    cin >> N >> M; 
+    for ( int i = 0; i <M; i ++){ 
+        cin >> a >> b;
+        map[a][b] = 1;
+    }
+    for ( int i = 1; i <= N; i++){
+        for( int j = 1; j <=N; j++){
+            if(map[i][j] == 1 &&dfsChecked[i][j] ==0) {
+                dfs(i, j); 
+                cnt++;
+            }
+        }
+    }
+    cout << cnt;
+    return 0;
+}
