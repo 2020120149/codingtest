@@ -1,0 +1,37 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+vector<pair<int, int>> P;
+int N;
+int result;
+
+int compare(pair<int, int> a, pair<int, int> b) {
+	if (a.second == b.second)
+		return a.first < b.second;
+	return a.second < b.second;
+}
+
+void solve() {
+	int temp = 0;
+
+	sort(P.begin(), P.end(), compare);
+
+	for (int i = 0; i < P.size(); i++) {
+		temp += P[i].second;
+		result += temp;
+	}
+}
+
+int main() {
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		int time;
+		cin >> time;
+		P.push_back({i, time});
+	}
+	solve();
+	cout << result << "\n";
+	return 0;
+}
