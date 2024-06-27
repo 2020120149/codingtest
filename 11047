@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    int N,K;
+    cin >> N >> K;
+
+    vector<int> count(N);
+
+    for(int i = 0; i < N; i++) {
+        cin >> count[i];
+    }
+
+    int much = 0;
+
+    for(int j = N; j > -1; j--) {
+        if(count[j] <= K) {
+            much += (K / count[j]);
+            K %= count[j];
+        }
+    }
+
+    cout << much << endl;
+}
