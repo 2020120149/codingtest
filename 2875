@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+int n,m,k;
+
+int main(){
+    cin>>n>>m>>k;
+    int team{0};
+    while(n>0&&m>0){
+        n-=2; m--; team++;
+        if(n+m<k){
+            team--; break;
+        }
+    }
+    cout<<team<<"\n";
+    
+    
+    return 0;
+}
