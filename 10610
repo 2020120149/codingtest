@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    string N;
+    cin >> N;
+
+    vector<char> digits(N.begin(), N.end());
+
+    if (find(digits.begin(), digits.end(), '0') == digits.end()) {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    int digit_sum = 0;
+    for (char digit : digits) {
+        digit_sum += digit - '0';
+    }
+
+    if (digit_sum % 3 != 0) {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    sort(digits.rbegin(), digits.rend());
+
+    for (char digit : digits) {
+        cout << digit;
+    }
+    cout << endl;
+
+    return 0;
+}
