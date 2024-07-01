@@ -1,0 +1,8 @@
+#include<iostream>
+#include<algorithm>
+#include<string>
+using namespace std;
+int n;
+int t;
+string s;
+int dp[3][1001];
