@@ -1,0 +1,58 @@
+#include <iostream>
+
+using namespace std;
+
+int diff[101] = {0, };
+bool DP[101][1001] = {{false, },};
+
+int main() {
+    int N, S, M, max_value = -1;
+    cin >> N >> S >> M;
+
+    for (int i = 0; i < N; i++) {
+        cin >> diff[i];
+    }
+
+    if (S + diff[0] <= M && S + diff[0] >= 0) {
+        DP[0][S + diff[0]] = true;
+        DP[0][S - diff[0]] = true;
+    }
+
+    else if (S + diff[0] <= M) {
+        DP[0][S + diff[0]] = true;
+    }
+
+    else {
+        DP[0][S - diff[0]] = true;
+    }
+
+    for (int i = 1; i < N; i++) {
+        for (int j = 0; j <= M; j++) {
+            if (DP[i - 1][j]) {
+                if (j + diff[i] <= M && j - diff[i] >= 0) {
+                    DP[i][j + diff[i]] = true;
+                    DP[i][j - diff[i]] = true;
+                }
+
+                else if (j + diff[i] <= M) {
+                    DP[i][j + diff[i]] = true;
+                }
+
+                else {
+                    DP[i][j - diff[i]] = true;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i <= M; i++) {
+        if (DP[N - 1][i]) {
+            if (max_value < i) {
+                max_value = i;
+            }
+        }
+    }
+    
+    cout << max_value;
+    return 0;
+}
