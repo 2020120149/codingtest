@@ -1,0 +1,49 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int cache[500][500];
+pair<int, int> m[500];
+
+int cost(pair<int, int> a, pair<int, int> b) {
+	return a.first * a.second * b.second;
+}
+
+pair<int, int> new_pair(int a, int b) {
+	return make_pair(m[a].first, m[b].second);
+}
+
+int process(int from, int to) {
+	if (cache[from][to] != -1) return cache[from][to];
+	if (from == to) {
+		cache[from][to] = 0;
+		return cache[from][to];
+	}
+	if (from - to == 1) {
+		cache[from][to] = cost(m[from], m[to]);
+		return cache[from][to];
+	}
+
+	cache[from][to] = min(
+		process(from + 1, to) + cost(m[from], new_pair(from + 1, to)),
+		cost(m[from], m[from + 1]) + process(from + 2, to) + cost(new_pair(from, from + 1), new_pair(from + 2, to))
+	);
+	return cache[from][to];
+}
+
+
+int main() {
+	for (int i = 0; i < 500; ++i) {
+		for (int j = 0; j < 500; ++j) {
+			cache[i][j] = -1;
+		}
+	}
+
+	int size;
+	cin >> size;
+	for (int i = 0; i < size; ++i) {
+		int r, c;
+		cin >> r >> c;
+		m[i] = make_pair(r, c);
+	}
+	cout << process(0, size - 1);
+}
